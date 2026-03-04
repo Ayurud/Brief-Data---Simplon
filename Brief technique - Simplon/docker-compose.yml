@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  # Service d'accès aux données
+  # Utilisation d'une image connue pour être légère
+  srv_bdd:
+    image: nouchka/sqlite3
+    container_name: conteneur_bdd
+    volumes:
+      - ./BDD:/BDD
+    stdin_open: true
+    tty: true
+
+  # Service d'exécution de scripts en python
+  srv_scripts:
+    build: .
+    container_name: conteneur_scripts
+    depends_on:
+      - srv_bdd
+    volumes:
+      - ./Scripts:/Scripts
+      - ./BDD:/BDD
+    stdin_open: true
+    tty: true
