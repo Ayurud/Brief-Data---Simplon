@@ -10,6 +10,8 @@ def maj_table_magasins():
     
     # Requête HTTP
     requete_http = requests.get(url_brief, params={"gid":"714623615", "single":"true", "output":"csv"})
+    # Encodage (format du CSV pour les accents)
+    requete_http.encoding = 'utf-8'
     # Transforme la réception de texte brut et simule un accès à un fichier
     fichier = io.StringIO(requete_http.text)
 
@@ -19,7 +21,7 @@ def maj_table_magasins():
         df_magasins = df_magasins.rename(columns={
             'ID Magasin': 'id_magasin',
             'Ville': 'ville',
-            'Nombre de salariÃ©s': 'nb_salaries'
+            'Nombre de salariés': 'nb_salaries'
         })
 
         # Connexion à la base de données

@@ -10,6 +10,8 @@ def maj_table_ventes():
 
     # Requête HTTP
     requete_http = requests.get(url_brief, params={"gid":"760830694", "single":"true", "output":"csv"})
+    # Encodage (format du CSV pour les accents)
+    requete_http.encoding = 'utf-8'
     # Transforme la réception de texte brut et simule un accès à un fichier
     fichier = io.StringIO(requete_http.text)
 
@@ -17,10 +19,10 @@ def maj_table_ventes():
         # Lecture du fichier dans une data frame et on renomme les colonnes pour qu'elles correspondent exactement à notre base de données
         df_ventes = pd.read_csv(fichier)
         df_ventes = df_ventes.rename(columns={
-            'ID RÃ©fÃ©rence produit': 'id_ref_produit',
+            'ID Référence produit': 'id_ref_produit',
             'ID Magasin': 'id_magasin',
             'Date': 'date',
-            'QuantitÃ©': 'quantite'
+            'Quantité': 'quantite'
         })
 
         # Connexion à la base de données

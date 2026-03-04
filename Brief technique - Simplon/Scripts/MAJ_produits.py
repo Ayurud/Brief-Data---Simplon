@@ -10,6 +10,8 @@ def maj_table_produits() :
     
     # Requête HTTP
     requete_http = requests.get(url_brief, params={"gid":"0", "single":"true", "output":"csv"})
+    # Encodage (format du CSV pour les accents)
+    requete_http.encoding = 'utf-8'
     # Transforme la réception de texte brut et simule un accès à un fichier
     fichier = io.StringIO(requete_http.text)
 
@@ -17,7 +19,7 @@ def maj_table_produits() :
         # Lecture du fichier dans une data frame
         df_produits = pd.read_csv(fichier)
         df_produits = df_produits.rename(columns={
-            'ID RÃ©fÃ©rence produit': 'id_ref_produit',
+            'ID Référence produit': 'id_ref_produit',
             'Nom': 'nom',
             'Prix': 'prix',
             'Stock': 'stock'
